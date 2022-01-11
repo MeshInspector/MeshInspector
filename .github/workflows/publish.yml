@@ -38,8 +38,8 @@ jobs:
       - name: Push empty commit
         run: |
           git commit --allow-empty -m "Empty release commit"
+          git tag ${{ steps.latest_tag.outputs.tag }}
           git push
-          git push origin ${{ steps.latest_tag.outputs.tag }}
 
       - name: Create release
         id: create_release
