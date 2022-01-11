@@ -11,7 +11,7 @@ jobs:
   publish:
     timeout-minutes: 40
     # The type of runner that the job will run on
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, linux]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -60,7 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/MeshInspectorInstaller_${{ steps.latest_tag.outputs.release }}.msi
+          asset_path: ./downloads/MeshInspectorInstaller_${{ steps.latest_tag.outputs.release }}.msi
           asset_name: MeshInspectorInstaller_${{ steps.latest_tag.outputs.release }}.msi
           asset_content_type: application/x-msi
 
