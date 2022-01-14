@@ -4,7 +4,7 @@ on:
     secrets:
       BUILD_MACHINE_TOKEN:
         required: true
-    input:
+    inputs:
       release_tag:
         required: true
         type: string
