@@ -43,7 +43,7 @@ jobs:
           git tag ${{ steps.latest_tag.outputs.tag }}
           git push
 
-  create_release:
+  create-release:
     needs: [ download-release ]
     uses: MeshRUs/MeshInspectorReleases/.github/workflows/create-release.yml@master
     with:
@@ -57,7 +57,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: [ self-hosted ]
     env:
-      UPLOAD_URL: ${{ needs.create_release.outputs.upload_url }}
+      UPLOAD_URL: ${{ needs.create-release.outputs.upload_url }}
       RELEASE_TAG: ${{ needs.download-release.outputs.latest_tag }}
     steps:
       - name: Upload Windows Installer
