@@ -8,10 +8,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish:
-    timeout-minutes: 40
+  download-release:
+    timeout-minutes: 20
     # The type of runner that the job will run on
     runs-on: [self-hosted]
+    outputs:
+      latest_tag: ${{ steps.latest_tag.outputs.tag}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -41,20 +43,31 @@ jobs:
           git tag ${{ steps.latest_tag.outputs.tag }}
           git push
 
-      - name: Create release
-        id: create_release
-        uses: MeshRUs/MeshInspectorReleases/.github/workflows/create-release.yml@master
-        secrets:
-          BUILD_MACHINE_TOKEN: ${{ secrets.BUILD_MACHINE_TOKEN }}
+  create-release:
+    needs: [ download-release ]
+    uses: MeshRUs/MeshInspectorReleases/.github/workflows/create-release.yml@master
+    with:
+      release_tag: ${{ needs.download-release.outputs.latest_tag }}
+    secrets:
+      RELEASE_MACHINE_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
+  upload-release:
+    needs: [ download-release, create-release ]
+    timeout-minutes: 20
+    # The type of runner that the job will run on
+    runs-on: [ self-hosted ]
+    env:
+      UPLOAD_URL: ${{ needs.create-release.outputs.upload_url }}
+      RELEASE_TAG: ${{ needs.download-release.outputs.latest_tag }}
+    steps:
       - name: Upload Windows Installer
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/MeshInspectorInstaller_${{ steps.latest_tag.outputs.tag }}.msi
-          asset_name: MeshInspectorInstaller_${{ steps.latest_tag.outputs.tag }}.msi
+          upload_url: ${{ env.UPLOAD_URL }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: downloads/MeshInspectorInstaller_${{ env.RELEASE_TAG }}.msi
+          asset_name: MeshInspectorInstaller_${{ env.RELEASE_TAG }}.msi
           asset_content_type: application/x-msi
 
       - name: Upload Ubuntu Distribution
@@ -62,9 +75,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/meshinspector_${{ steps.latest_tag.outputs.tag }}.deb
-          asset_name: meshinspector_${{ steps.latest_tag.outputs.tag }}.deb
+          upload_url: ${{ env.UPLOAD_URL }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}.deb
+          asset_name: meshinspector_${{ env.RELEASE_TAG }}.deb
           asset_content_type: application/vnd.debian.binary-package
 
       - name: Upload Fedora Distribution
@@ -72,7 +85,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/meshinspector_${{ steps.latest_tag.outputs.tag }}.rpm
-          asset_name: meshinspector_${{ steps.latest_tag.outputs.tag }}.rpm
+          upload_url: ${{ env.UPLOAD_URL }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}.rpm
+          asset_name: meshinspector_${{ env.RELEASE_TAG }}.rpm
           asset_content_type: application/octet-streame
