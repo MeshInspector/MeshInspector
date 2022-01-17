@@ -45,7 +45,7 @@ jobs:
 
   create-release:
     needs: [ download-release ]
-    uses: MeshRUs/MeshInspectorReleases/.github/workflows/create-release.yml@release-table
+    uses: MeshRUs/MeshInspectorReleases/.github/workflows/create-release.yml@master
     with:
       release_tag: ${{ needs.download-release.outputs.latest_tag }}
     secrets:
