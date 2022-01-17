@@ -2,7 +2,7 @@ name: Versioning and relese URL
 on:
   workflow_call:
     secrets:
-      BUILD_MACHINE_TOKEN:
+      RELEASE_MACHINE_TOKEN:
         required: true
     inputs:
       release_tag:
@@ -24,11 +24,11 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.BUILD_MACHINE_TOKEN }}
-          RELEASE_PATH: ../../releases/download/${{steps.version.outputs.version}}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+          RELEASE_PATH: ../../releases/download/${{inputs.release_tag}}
         with:
-          tag_name: ${{steps.version.outputs.version }}
-          release_name: Release ${{steps.version.outputs.version}}
+          tag_name: ${{inputs.release_tag}}
+          release_name: Release ${{inputs.release_tag}}
           draft: false
           prerelease: false
           body: |
@@ -44,19 +44,19 @@ jobs:
                 <tr>
                   <td align="center">Windows x64</td>
                   <td align="center">
-                    <a href="${{env.RELEASE_PATH}}/MeshInspectorInstaller_${{steps.version.outputs.version}}.msi">msi</a>
+                    <a href="${{env.RELEASE_PATH}}/MeshInspectorInstaller_${{inputs.release_tag}}.msi">msi</a>
                   </td>
                 </tr>
                 <tr>
                   <td align="center">Ubuntu 20 LTS x64</td>
                   <td align="center">
-                    <a href="${{env.RELEASE_PATH}}/meshinspector_${{steps.version.outputs.version}}.deb">deb</a>
+                    <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.release_tag}}.deb">deb</a>
                   </td>
                 </tr>
                 <tr>
                   <td align="center">Fedora 35 x64</td>
                   <td align="center">
-                    <a href="${{env.RELEASE_PATH}}/meshinspector_${{steps.version.outputs.version}}.rpm">rpm</a>
+                    <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.release_tag}}.rpm">rpm</a>
                   </td>
                 </tr>
                 <tr>

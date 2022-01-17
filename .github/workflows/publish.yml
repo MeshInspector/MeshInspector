@@ -49,7 +49,7 @@ jobs:
     with:
       release_tag: ${{ needs.download-release.outputs.latest_tag }}
     secrets:
-      BUILD_MACHINE_TOKEN: ${{ secrets.BUILD_MACHINE_TOKEN }}
+      RELEASE_MACHINE_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
   upload-release:
     needs: [ download-release, create-release ]
