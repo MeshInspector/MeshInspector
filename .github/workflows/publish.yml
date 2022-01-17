@@ -8,8 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  download-release:
-    timeout-minutes: 20
+  find-private-release:
+    timeout-minutes: 5
     # The type of runner that the job will run on
     runs-on: [self-hosted]
     outputs:
@@ -28,7 +28,30 @@ jobs:
           releases-only: false
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
-      - name: Download release
+      - name: Push empty commit
+        run: |
+          git commit --allow-empty -m "Empty release commit"
+          git tag ${{ steps.latest_tag.outputs.tag }}
+          git push
+
+  create-public-release:
+    needs: [ find-private-release ]
+    uses: MeshRUs/MeshInspectorReleases/.github/workflows/create-public-release.yml@master
+    with:
+      release_tag: ${{ needs.find-private-release.outputs.latest_tag }}
+    secrets:
+      RELEASE_MACHINE_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+
+  upload-public-release:
+    needs: [ find-private-release, create-public-release ]
+    timeout-minutes: 20
+    # The type of runner that the job will run on
+    runs-on: [ self-hosted ]
+    env:
+      UPLOAD_URL: ${{ needs.create-public-release.outputs.upload_url }}
+      RELEASE_TAG: ${{ needs.find-private-release.outputs.latest_tag }}
+    steps:
+      - name: Download private release
         uses: robinraju/release-downloader@v1.3
         with:
           repository: MeshRUs/MeshInspector
@@ -37,29 +60,6 @@ jobs:
           out-file-path: "downloads"
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
-      - name: Push empty commit
-        run: |
-          git commit --allow-empty -m "Empty release commit"
-          git tag ${{ steps.latest_tag.outputs.tag }}
-          git push
-
-  create-release:
-    needs: [ download-release ]
-    uses: MeshRUs/MeshInspectorReleases/.github/workflows/create-release.yml@master
-    with:
-      release_tag: ${{ needs.download-release.outputs.latest_tag }}
-    secrets:
-      RELEASE_MACHINE_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
-
-  upload-release:
-    needs: [ download-release, create-release ]
-    timeout-minutes: 20
-    # The type of runner that the job will run on
-    runs-on: [ self-hosted ]
-    env:
-      UPLOAD_URL: ${{ needs.create-release.outputs.upload_url }}
-      RELEASE_TAG: ${{ needs.download-release.outputs.latest_tag }}
-    steps:
       - name: Upload Windows Installer
         uses: actions/upload-release-asset@v1
         env:
