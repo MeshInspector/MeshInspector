@@ -1,4 +1,4 @@
-name: Versioning and relese URL
+name: Relese URL
 on:
   workflow_call:
     secrets:
