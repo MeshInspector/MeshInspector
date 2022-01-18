@@ -55,7 +55,7 @@ jobs:
         uses: robinraju/release-downloader@v1.3
         with:
           repository: MeshRUs/MeshInspector
-          tag: ${{ steps.latest_tag.outputs.tag }}
+          tag: ${{ env.RELEASE_TAG }}
           fileName: "*"
           out-file-path: "downloads"
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
