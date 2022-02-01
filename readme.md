@@ -4,6 +4,8 @@ This repository holds public Mesh Inspector releases
 
 Mesh Inspector is application for geometry processing based on [MeshLib](https://github.com/MeshRUs/MeshLib)
 
+[Report an issue anonymously](https://meshrus.github.io/ReportIssue/)
+
 ### Technology
  - OpenGL v4 by default, v3 for a compatibility
 ### Performance
