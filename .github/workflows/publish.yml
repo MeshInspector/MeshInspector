@@ -89,3 +89,23 @@ jobs:
           asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}.rpm
           asset_name: meshinspector_${{ env.RELEASE_TAG }}.rpm
           asset_content_type: application/octet-streame
+
+      - name: Upload Apple x64 pkg
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+        with:
+          upload_url: ${{ env.UPLOAD_URL }}
+          asset_path: downloads/MeshInspector_${{ env.RELEASE_TAG }}_x64.pkg
+          asset_name: MeshInspector_${{ env.RELEASE_TAG }}_x64.pkg
+          asset_content_type: application/octet-streame
+
+      - name: Upload Apple arm pkg
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+        with:
+          upload_url: ${{ env.UPLOAD_URL }}
+          asset_path: downloads/MeshInspector_${{ env.RELEASE_TAG }}_arm.pkg
+          asset_name: MeshInspector_${{ env.RELEASE_TAG }}_arm.pkg
+          asset_content_type: application/octet-streame
