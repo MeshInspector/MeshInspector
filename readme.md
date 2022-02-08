@@ -1,8 +1,9 @@
-# Mesh Inspector releases
+# MeshInspector releases
 
-This repository holds public Mesh Inspector releases
+This repository holds public MeshInspector releases
 
-Mesh Inspector is application for geometry processing based on [MeshLib](https://github.com/MeshRUs/MeshLib)
+MeshInspector is an application for geometry processing based on [MeshLib](https://github.com/MeshRUs/MeshLib). 
+Find more in [Slides](https://docs.google.com/presentation/d/1D0Ry6SE2J25PBtO_G9ZIp1cavoX2wyyY8jgvtjeayC4/edit?usp=sharing).
 
 [Report an issue anonymously](https://meshrus.github.io/ReportIssue/)
 
