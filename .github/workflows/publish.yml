@@ -91,7 +91,6 @@ jobs:
           asset_content_type: application/octet-streame
 
       - name: Upload Apple x64 pkg
-        if: ${{ false }} 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
@@ -102,7 +101,6 @@ jobs:
           asset_content_type: application/octet-streame
 
       - name: Upload Apple arm pkg
-        if: ${{ false }} 
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
