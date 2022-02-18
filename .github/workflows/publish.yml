@@ -11,7 +11,7 @@ jobs:
   find-private-release:
     timeout-minutes: 5
     # The type of runner that the job will run on
-    runs-on: [self-hosted]
+    runs-on: [self-hosted, windows, x64]
     outputs:
       latest_tag: ${{ steps.latest_tag.outputs.tag}}
     steps:
@@ -46,7 +46,7 @@ jobs:
     needs: [ find-private-release, create-public-release ]
     timeout-minutes: 20
     # The type of runner that the job will run on
-    runs-on: [ self-hosted ]
+    runs-on: [self-hosted]
     env:
       UPLOAD_URL: ${{ needs.create-public-release.outputs.upload_url }}
       RELEASE_TAG: ${{ needs.find-private-release.outputs.latest_tag }}
