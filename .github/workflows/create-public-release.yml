@@ -16,7 +16,7 @@ on:
 jobs:
   create_release:
     timeout-minutes: 5
-    runs-on: [self-hosted]
+    runs-on: ubuntu-latest
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
