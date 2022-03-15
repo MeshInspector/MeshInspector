@@ -7,7 +7,7 @@ Find more in [Slides](https://docs.google.com/presentation/d/1D0Ry6SE2J25PBtO_G9
 
 ![image](https://user-images.githubusercontent.com/3136125/153055383-a86e9e4f-f260-476c-af5e-c5e28e7a1632.png)
 
-[Check out web version of MeshInspector](https://meshrus.github.io/MeshInspectorWebTest/RMI/)
+[Check out web version of MeshInspector](https://demo.meshinspector.com/)
 > This is still in work, tested on Chrome and Firefox browsers
 
 [Report an issue anonymously](https://meshrus.github.io/ReportIssue/)
