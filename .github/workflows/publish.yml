@@ -11,14 +11,14 @@ jobs:
   find-private-release:
     timeout-minutes: 5
     # The type of runner that the job will run on
-    runs-on: [self-hosted, windows, x64]
+    runs-on: ubuntu-latest
     outputs:
       latest_tag: ${{ steps.latest_tag.outputs.tag}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+          token: ${{ secrets.MESHRUSBOT_TOKEN }}
         
       - name: Find MeshInspector latest tag
         uses: oprypin/find-latest-tag@v1
@@ -26,10 +26,12 @@ jobs:
         with:
           repository: MeshRUs/MeshInspector
           releases-only: false
-          token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+          token: ${{ secrets.MESHRUSBOT_TOKEN }}
 
       - name: Push empty commit
         run: |
+          git config --global user.email "${{ secrets.MESHRUSBOT_TOKEN }}@gmail.com"
+          git config --global user.name "MeshRusBot"
           git commit --allow-empty -m "Empty release commit"
           git tag ${{ steps.latest_tag.outputs.tag }}
           git push
