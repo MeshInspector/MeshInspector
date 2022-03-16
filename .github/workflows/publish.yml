@@ -26,7 +26,7 @@ jobs:
         with:
           repository: MeshRUs/MeshInspector
           releases-only: false
-          token: ${{ secrets.MESHRUSBOT_TOKEN }}
+          token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
       - name: Push empty commit
         run: |
@@ -42,7 +42,7 @@ jobs:
     with:
       release_tag: ${{ needs.find-private-release.outputs.latest_tag }}
     secrets:
-      RELEASE_MACHINE_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+      RELEASE_MACHINE_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
 
   upload-public-release:
     needs: [ find-private-release, create-public-release ]
