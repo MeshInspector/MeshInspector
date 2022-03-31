@@ -24,7 +24,7 @@ jobs:
         uses: oprypin/find-latest-tag@v1
         id: latest_tag
         with:
-          repository: MeshRUs/MeshInspector
+          repository: MeshInspector/MeshInspector
           releases-only: false
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
@@ -38,7 +38,7 @@ jobs:
 
   create-public-release:
     needs: [ find-private-release ]
-    uses: MeshRUs/MeshInspectorReleases/.github/workflows/create-public-release.yml@master
+    uses: MeshInspector/MeshInspectorReleases/.github/workflows/create-public-release.yml@master
     with:
       release_tag: ${{ needs.find-private-release.outputs.latest_tag }}
     secrets:
@@ -56,7 +56,7 @@ jobs:
       - name: Download private release
         uses: robinraju/release-downloader@v1.3
         with:
-          repository: MeshRUs/MeshInspector
+          repository: MeshInspector/MeshInspector
           tag: ${{ env.RELEASE_TAG }}
           fileName: "*"
           out-file-path: "downloads"
