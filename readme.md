@@ -30,4 +30,10 @@ Find more in [Slides](https://docs.google.com/presentation/d/1D0Ry6SE2J25PBtO_G9
  - Triangles color map,
  - Static textures.
 ### Order independed transparency
-### Convenient for mesh algorithms debugging, showing mesh edges, boundaries.
+
+Perfect and fast visualization of many transparent objects with complex geometry using OpenGL 4:
+![image](https://user-images.githubusercontent.com/3136125/168789144-ee83ca11-4ca1-4dd0-97fc-e138500d9b10.png)
+
+### Convenient for mesh algorithms debugging, showing mesh edges, boundaries
+### Computed-tomography reconstruction
+An ability to reconstruct voxel object from a set of projection images (radiographs) and known cone-beam CT scanner geometry parameters. Nvidia GPU is utilized via CUDA technology for the best reconstruction performance.
