@@ -35,9 +35,11 @@ jobs:
           python3 parse_notes.py
 
       - name: Test
+        working-directory: .github
         run: cat output.txt
 
       - name: Set env variable
+        working-directory: .github
         run: echo "GITHUB_CHANGELOG=$(cat output.txt)" >> $GITHUB_ENV
 
       - name: Test
