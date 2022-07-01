@@ -9,8 +9,8 @@ RELEASE_TAG = sys.argv[2]
 
 with open("changelog.txt", "r") as changelog, open("release_body.txt", "r") as release_body, open("final_body.txt", "w") as output:
     for line in release_body:
-        line.replace("${{env.RELEASE_PATH}}", RELEASE_PATH)
-        line.replace("${{inputs.release_tag}}", RELEASE_TAG)
+        line = line.replace("${{env.RELEASE_PATH}}", RELEASE_PATH)
+        line = line.replace("${{inputs.release_tag}}", RELEASE_TAG)
         output.write(line)
 
     output.write("\r\n")

@@ -52,7 +52,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
         with:
           tag_name: ${{steps.latest_tag.outputs.tag}}
-          release_name: Release ${{inputs.release_tag}}
+          release_name: Release ${{steps.latest_tag.outputs.tag}}
           draft: false
           prerelease: false
           body_path: .github/final_body.txt
@@ -66,12 +66,10 @@ jobs:
           out-file-path: "downloads"
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
-      - name: Upload Installers
+    - name: Upload Installers
         working-directory: downloads
         run: |
-            gh release upload \
-                    --repository MeshInspector/MeshInspector \
-                    --tag ${{steps.latest_tag.outputs.tag}} \
+            gh release upload ${{steps.latest_tag.outputs.tag}} \
                    MeshInspectorInstaller_${{steps.latest_tag.outputs.tag}}.msi \
                    meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu20.deb \
                    meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu22.deb \
