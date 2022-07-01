@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  find-private-release:
+  publish-private-release:
     timeout-minutes: 5
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -36,88 +36,43 @@ jobs:
           git tag ${{ steps.latest_tag.outputs.tag }}
           git push
 
-  create-public-release:
-    needs: [ find-private-release ]
-    uses: MeshInspector/MeshInspector/.github/workflows/create-public-release.yml@master
-    with:
-      release_tag: ${{ needs.find-private-release.outputs.latest_tag }}
-    secrets:
-      RELEASE_MACHINE_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
+      - name: Update Release Notes
+        working-directory: .github
+        env:
+          RELEASE_PATH: ../../releases/download/${{steps.latest_tag.outputs.tag}}
+        run: |
+          echo ${{ secrets.RELEASE_MACHINE_TOKEN }} | gh auth login --with-token
+          gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{steps.latest_tag.outputs.tag}} | jq -r '. | .body' > changelog.txt
+          python3 update_release_body.py ${{env.RELEASE_PATH}} ${{steps.latest_tag.outputs.tag}}
 
-  upload-public-release:
-    needs: [ find-private-release, create-public-release ]
-    timeout-minutes: 20
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-    env:
-      UPLOAD_URL: ${{ needs.create-public-release.outputs.upload_url }}
-      RELEASE_TAG: ${{ needs.find-private-release.outputs.latest_tag }}
-    steps:
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
+        with:
+          tag_name: ${{steps.latest_tag.outputs.tag}}
+          release_name: Release ${{steps.latest_tag.outputs.tag}}
+          draft: false
+          prerelease: false
+          body_path: .github/final_body.txt
+
       - name: Download private release
         uses: robinraju/release-downloader@v1.3
         with:
           repository: MeshInspector/MeshInspectorCode
-          tag: ${{ env.RELEASE_TAG }}
+          tag: ${{steps.latest_tag.outputs.tag}}
           fileName: "*"
           out-file-path: "downloads"
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
-      - name: Upload Windows Installer
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
-        with:
-          upload_url: ${{ env.UPLOAD_URL }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/MeshInspectorInstaller_${{ env.RELEASE_TAG }}.msi
-          asset_name: MeshInspectorInstaller_${{ env.RELEASE_TAG }}.msi
-          asset_content_type: application/x-msi
-
-      - name: Upload Ubuntu 20 Distribution
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
-        with:
-          upload_url: ${{ env.UPLOAD_URL }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}_ubuntu20.deb
-          asset_name: meshinspector_${{ env.RELEASE_TAG }}_ubuntu20.deb
-          asset_content_type: application/vnd.debian.binary-package
-
-      - name: Upload Ubuntu 22 Distribution
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
-        with:
-          upload_url: ${{ env.UPLOAD_URL }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}_ubuntu22.deb
-          asset_name: meshinspector_${{ env.RELEASE_TAG }}_ubuntu22.deb
-          asset_content_type: application/vnd.debian.binary-package
-
-      - name: Upload Fedora Distribution
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
-        with:
-          upload_url: ${{ env.UPLOAD_URL }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}.rpm
-          asset_name: meshinspector_${{ env.RELEASE_TAG }}.rpm
-          asset_content_type: application/octet-streame
-
-      - name: Upload Apple x64 pkg
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
-        with:
-          upload_url: ${{ env.UPLOAD_URL }}
-          asset_path: downloads/MeshInspector_${{ env.RELEASE_TAG }}_x64.pkg
-          asset_name: MeshInspector_${{ env.RELEASE_TAG }}_x64.pkg
-          asset_content_type: application/octet-streame
-
-      - name: Upload Apple arm pkg
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
-        with:
-          upload_url: ${{ env.UPLOAD_URL }}
-          asset_path: downloads/MeshInspector_${{ env.RELEASE_TAG }}_arm.pkg
-          asset_name: MeshInspector_${{ env.RELEASE_TAG }}_arm.pkg
-          asset_content_type: application/octet-streame
+      - name: Upload Installers
+        working-directory: downloads
+        run: |
+            gh release upload ${{steps.latest_tag.outputs.tag}} \
+                   MeshInspectorInstaller_${{steps.latest_tag.outputs.tag}}.msi \
+                   meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu20.deb \
+                   meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu22.deb \
+                   meshinspector_${{steps.latest_tag.outputs.tag}}.rpm \
+                   MeshInspector_${{steps.latest_tag.outputs.tag}}_x64.pkg \
+                   MeshInspector_${{steps.latest_tag.outputs.tag}}_arm.pkg
