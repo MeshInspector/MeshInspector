@@ -23,12 +23,12 @@ jobs:
       - name: Copy Release Notes
         working-directory: ./.github
         run: |
-          echo ${{ secrets.BUILD_MACHINE_TOKEN }} | gh auth login --with-token
+          echo ${{ secrets.RELEASE_MACHINE_TOKEN }} | gh auth login --with-token
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{inputs.release_tag}} | jq -r '. | .body' > input.txt
           python3 parse_notes.py
           CHANGELOG=$(cat output.txt)
-          echo "CHANGELOG=${CHANGELOG}" >> $GITHUB_ENV
-          echo "${{CHANGELOG}}"
+          echo "CHANGELOG=${{CHANGELOG}}" >> $GITHUB_ENV
+          echo "${{env.CHANGELOG}}"
 
       - name: Create Release
         if: ${{false}}
