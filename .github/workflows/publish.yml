@@ -43,7 +43,8 @@ jobs:
     with:
       release_tag: ${{ needs.find-private-release.outputs.latest_tag }}
     secrets:
-      RELEASE_MACHINE_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
+      RELEASE_MACHINE_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+      MESHRUSBOT_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
 
   upload-public-release:
     if: ${{false}}

@@ -4,6 +4,8 @@ on:
     secrets:
       RELEASE_MACHINE_TOKEN:
         required: true
+      MESHRUSBOT_TOKEN:
+        required: true
     inputs:
       release_tag:
         required: true
@@ -23,7 +25,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+          token: ${{ secrets.MESHRUSBOT_TOKEN }}
 
       - name: Copy Release Notes
         working-directory: .github
@@ -39,7 +41,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
           RELEASE_PATH: ../../releases/download/${{inputs.release_tag}}
         with:
           tag_name: ${{inputs.release_tag}}
