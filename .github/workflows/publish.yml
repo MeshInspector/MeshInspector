@@ -45,6 +45,7 @@ jobs:
       RELEASE_MACHINE_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
 
   upload-public-release:
+    if: ${{false}g
     needs: [ find-private-release, create-public-release ]
     timeout-minutes: 20
     # The type of runner that the job will run on
