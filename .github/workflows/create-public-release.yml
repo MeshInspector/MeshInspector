@@ -27,8 +27,7 @@ jobs:
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{inputs.release_tag}} | jq -r '. | .body' > input.txt
           python3 parse_notes.py
           CHANGELOG=$(cat output.txt)
-          echo "CHANGELOG=${{CHANGELOG}}" >> $GITHUB_ENV
-          echo "${{env.CHANGELOG}}"
+          echo $CHANGELOG
 
       - name: Create Release
         if: ${{false}}
