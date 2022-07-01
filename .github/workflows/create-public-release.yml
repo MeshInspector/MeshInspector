@@ -20,8 +20,13 @@ jobs:
     outputs:
       upload_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.MESHRUSBOT_TOKEN }}
+
       - name: Copy Release Notes
-        working-directory: ./.github
+        working-directory: .github
         run: |
           echo ${{ secrets.RELEASE_MACHINE_TOKEN }} | gh auth login --with-token
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{inputs.release_tag}} | jq -r '. | .body' > input.txt
