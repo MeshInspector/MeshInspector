@@ -20,6 +20,8 @@ with open("changelog.txt", "r") as changelog, open("release_body.txt", "r") as r
         line = line.strip()
         if "What's Changed" in line:
             skipPrint = False
+            output.write(line + "\n\n")
+            continue
         if not line or "**Full Changelog**" in line :
             continue
         if not skipPrint:

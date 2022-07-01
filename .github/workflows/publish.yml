@@ -39,7 +39,7 @@ jobs:
       - name: Update Release Notes
         working-directory: .github
         env:
-          RELEASE_PATH: ../../releases/download/${{inputs.release_tag}}
+          RELEASE_PATH: ../../releases/download/${{steps.latest_tag.outputs.tag}}
         run: |
           echo ${{ secrets.RELEASE_MACHINE_TOKEN }} | gh auth login --with-token
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{steps.latest_tag.outputs.tag}} | jq -r '. | .body' > changelog.txt
