@@ -13,7 +13,7 @@ with open("changelog.txt", "r") as changelog, open("release_body.txt", "r") as r
         line = line.replace("${{inputs.release_tag}}", RELEASE_TAG)
         output.write(line)
 
-    output.write("\r\n")
+    output.write("\n")
 
     skipPrint = True
     for line in changelog:
@@ -24,4 +24,4 @@ with open("changelog.txt", "r") as changelog, open("release_body.txt", "r") as r
             continue
         if not skipPrint:
             line = line.split(" in https:")[0]
-            output.write(line + "\r\n")
+            output.write(line + "\n")
