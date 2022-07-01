@@ -72,14 +72,24 @@ jobs:
           asset_name: MeshInspectorInstaller_${{ env.RELEASE_TAG }}.msi
           asset_content_type: application/x-msi
 
-      - name: Upload Ubuntu Distribution
+      - name: Upload Ubuntu 20 Distribution
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
         with:
           upload_url: ${{ env.UPLOAD_URL }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}.deb
-          asset_name: meshinspector_${{ env.RELEASE_TAG }}.deb
+          asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}_ubuntu20.deb
+          asset_name: meshinspector_${{ env.RELEASE_TAG }}_ubuntu20.deb
+          asset_content_type: application/vnd.debian.binary-package
+
+      - name: Upload Ubuntu 22 Distribution
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+        with:
+          upload_url: ${{ env.UPLOAD_URL }}  # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: downloads/meshinspector_${{ env.RELEASE_TAG }}_ubuntu22.deb
+          asset_name: meshinspector_${{ env.RELEASE_TAG }}_ubuntu22.deb
           asset_content_type: application/vnd.debian.binary-package
 
       - name: Upload Fedora Distribution
