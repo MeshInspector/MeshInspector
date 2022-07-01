@@ -23,7 +23,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          token: ${{ secrets.MESHRUSBOT_TOKEN }}
+          token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
       - name: Copy Release Notes
         working-directory: .github
