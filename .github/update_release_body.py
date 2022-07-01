@@ -25,5 +25,6 @@ with open("changelog.txt", "r") as changelog, open("release_body.txt", "r") as r
         if not line or "**Full Changelog**" in line :
             continue
         if not skipPrint:
-            line = line.split(" in https:")[0]
+            line = line.split(" in https:")[0] # rm link
+            line = " ".join(line.split(' ')[:-2]) # rm author
             output.write(line + "\n")
