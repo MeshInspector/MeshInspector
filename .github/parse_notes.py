@@ -1,4 +1,4 @@
-with open("input.txt", "r") as input, open("output.txt", "w") as output:
+with open("../input.txt", "r") as input, open("../output.txt", "w") as output:
     skipPrint = True
     for line in input:
         line = line.strip()
