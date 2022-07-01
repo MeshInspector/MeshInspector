@@ -41,7 +41,7 @@ Our macos package is not signed yet, so to install it, follow this simple steps:
         <tr>
             <td align="center">MacOS x64</td>
             <td align="center">
-            <   a href="${{env.RELEASE_PATH}}/MeshInspector_${{inputs.release_tag}}_x64.pkg">x64 pkg</a>
+                <a href="${{env.RELEASE_PATH}}/MeshInspector_${{inputs.release_tag}}_x64.pkg">x64 pkg</a>
             </td>
         </tr>
         <tr>
