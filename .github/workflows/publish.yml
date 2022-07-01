@@ -46,7 +46,36 @@ jobs:
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{steps.latest_tag.outputs.tag}} | jq -r '. | .body' > changelog.txt
           python3 update_release_body.py ${{env.RELEASE_PATH}} ${{steps.latest_tag.outputs.tag}}
 
-      - name: Test
-        working-directory: .github
-        run: cat final_body.txt
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
+        with:
+          tag_name: ${{steps.latest_tag.outputs.tag}}
+          release_name: Release ${{inputs.release_tag}}
+          draft: false
+          prerelease: false
+          body_path: .github/final_body.txt
 
+      - name: Download private release
+        uses: robinraju/release-downloader@v1.3
+        with:
+          repository: MeshInspector/MeshInspectorCode
+          tag: ${{steps.latest_tag.outputs.tag}}
+          fileName: "*"
+          out-file-path: "downloads"
+          token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+
+      - name: Upload Installers
+        working-directory: downloads
+        run: |
+            gh release upload \
+                    --repository MeshInspector/MeshInspector \
+                    --tag ${{steps.latest_tag.outputs.tag}} \
+          MeshInspectorInstaller_${{steps.latest_tag.outputs.tag}}.msi \
+                   meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu20.deb \
+                   meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu22.deb \
+                   meshinspector_${{steps.latest_tag.outputs.tag}}.rpm \
+                   MeshInspector_${{steps.latest_tag.outputs.tag}}_x64.pkg \
+                   MeshInspector_${{steps.latest_tag.outputs.tag}}_arm.pkg

@@ -13,6 +13,8 @@ with open("changelog.txt", "r") as changelog, open("release_body.txt", "r") as r
         line.replace("${{inputs.release_tag}}", RELEASE_TAG)
         output.write(line)
 
+    output.write("\r\n")
+
     skipPrint = True
     for line in changelog:
         line = line.strip()
