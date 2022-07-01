@@ -8,4 +8,4 @@ with open("input.txt", "r") as input, open("output.txt", "w") as output:
             continue
         if not skipPrint:
             line = line.split(" in https:")[0]
-            output.write(line + "\n")
+            output.write(line + "\r\n")

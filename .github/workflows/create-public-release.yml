@@ -33,8 +33,15 @@ jobs:
           echo ${{ secrets.RELEASE_MACHINE_TOKEN }} | gh auth login --with-token
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{inputs.release_tag}} | jq -r '. | .body' > input.txt
           python3 parse_notes.py
-          CHANGELOG=$(cat output.txt)
-          echo $CHANGELOG
+
+      - name: Test
+        run: cat output.txt
+
+      - name: Set env variable
+        run: echo "GITHUB_CHANGELOG=$(cat output.txt)" >> $GITHUB_ENV
+
+      - name: Test
+        run: echo ${{ env.GITHUB_CHANGELOG }}
 
       - name: Create Release
         if: ${{false}}
@@ -103,3 +110,5 @@ jobs:
                 </tr>
               </tbody>
             </table>
+            
+            ${{ env.GITHUB_CHANGELOG }}
