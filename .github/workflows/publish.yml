@@ -73,7 +73,7 @@ jobs:
             gh release upload \
                     --repository MeshInspector/MeshInspector \
                     --tag ${{steps.latest_tag.outputs.tag}} \
-          MeshInspectorInstaller_${{steps.latest_tag.outputs.tag}}.msi \
+                   MeshInspectorInstaller_${{steps.latest_tag.outputs.tag}}.msi \
                    meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu20.deb \
                    meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu22.deb \
                    meshinspector_${{steps.latest_tag.outputs.tag}}.rpm \
