@@ -23,7 +23,7 @@ jobs:
       - name: Copy Release Notes
         run: |
           echo ${{ secrets.BUILD_MACHINE_TOKEN }} | gh auth login --with-token
-          gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/v0.0.89.27 | jq -r '. | .body' > input.txt
+          gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{inputs.release_tag}} | jq -r '. | .body' > input.txt
           python3 parse_notes.py
           echo "CHANGELOG=$(cat output.txt)" >> $GITHUB_ENV
           echo $CHANGELOG

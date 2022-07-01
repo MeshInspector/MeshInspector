@@ -29,6 +29,7 @@ jobs:
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
       - name: Push empty commit
+        if: ${{false}}
         run: |
           git config --global user.email "${{ secrets.MESHRUSBOT_EMAIL }}@gmail.com"
           git config --global user.name "MeshRusBot"
@@ -38,7 +39,7 @@ jobs:
 
   create-public-release:
     needs: [ find-private-release ]
-    uses: MeshInspector/MeshInspector/.github/workflows/create-public-release.yml@master
+    uses: MeshInspector/MeshInspector/.github/workflows/create-public-release.yml@add-changelog
     with:
       release_tag: ${{ needs.find-private-release.outputs.latest_tag }}
     secrets:
