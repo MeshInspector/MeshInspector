@@ -25,7 +25,7 @@ jobs:
         id: latest_tag
         with:
           repository: MeshInspector/MeshInspectorCode
-          releases-only: false
+          releases-only: true
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
 
       - name: Push empty commit
