@@ -13,7 +13,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     outputs:
-      latest_tag: ${{ steps.latest_tag.outputs.tag}}
+      latest_tag: ${{ steps.latest_tag.outputs.release}}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,29 +21,29 @@ jobs:
           token: ${{ secrets.MESHRUSBOT_TOKEN }}
         
       - name: Find MeshInspector latest tag
-        uses: oprypin/find-latest-tag@v1
+        uses: pozetroninc/github-action-get-latest-release@master
         id: latest_tag
         with:
-          repository: MeshInspector/MeshInspectorCode
-          releases-only: true
+          repo_path: MeshInspector/MeshInspectorCode
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
+          excludes: prerelease, draft
 
       - name: Push empty commit
         run: |
           git config --global user.email "${{ secrets.MESHRUSBOT_EMAIL }}@gmail.com"
           git config --global user.name "MeshRusBot"
           git commit --allow-empty -m "Empty release commit"
-          git tag ${{ steps.latest_tag.outputs.tag }}
+          git tag ${{ steps.latest_tag.outputs.release }}
           git push
 
       - name: Update Release Notes
         working-directory: .github
         env:
-          RELEASE_PATH: https://github.com/${{github.repository}}/releases/download/${{steps.latest_tag.outputs.tag}}
+          RELEASE_PATH: https://github.com/${{github.repository}}/releases/download/${{steps.latest_tag.outputs.release}}
         run: |
           echo ${{ secrets.RELEASE_MACHINE_TOKEN }} | gh auth login --with-token
-          gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{steps.latest_tag.outputs.tag}} | jq -r '. | .body' > changelog.txt
-          python3 update_release_body.py ${{env.RELEASE_PATH}} ${{steps.latest_tag.outputs.tag}}
+          gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{steps.latest_tag.outputs.release}} | jq -r '. | .body' > changelog.txt
+          python3 update_release_body.py ${{env.RELEASE_PATH}} ${{steps.latest_tag.outputs.release}}
 
       - name: Create Release
         id: create_release
@@ -51,8 +51,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
         with:
-          tag_name: ${{steps.latest_tag.outputs.tag}}
-          release_name: Release ${{steps.latest_tag.outputs.tag}}
+          tag_name: ${{steps.latest_tag.outputs.release}}
+          release_name: Release ${{steps.latest_tag.outputs.release}}
           draft: false
           prerelease: false
           body_path: .github/final_body.txt
@@ -61,7 +61,7 @@ jobs:
         uses: robinraju/release-downloader@v1.3
         with:
           repository: MeshInspector/MeshInspectorCode
-          tag: ${{steps.latest_tag.outputs.tag}}
+          tag: ${{steps.latest_tag.outputs.release}}
           fileName: "*"
           out-file-path: "downloads"
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
@@ -69,10 +69,10 @@ jobs:
       - name: Upload Installers
         working-directory: downloads
         run: |
-            gh release upload ${{steps.latest_tag.outputs.tag}} \
-                   MeshInspectorInstaller_${{steps.latest_tag.outputs.tag}}.msi \
-                   meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu20.deb \
-                   meshinspector_${{steps.latest_tag.outputs.tag}}_ubuntu22.deb \
-                   meshinspector_${{steps.latest_tag.outputs.tag}}.rpm \
-                   MeshInspector_${{steps.latest_tag.outputs.tag}}_x64.pkg \
-                   MeshInspector_${{steps.latest_tag.outputs.tag}}_arm.pkg
+            gh release upload ${{steps.latest_tag.outputs.release}} \
+                   MeshInspectorInstaller_${{steps.latest_tag.outputs.release}}.msi \
+                   meshinspector_${{steps.latest_tag.outputs.release}}_ubuntu20.deb \
+                   meshinspector_${{steps.latest_tag.outputs.release}}_ubuntu22.deb \
+                   meshinspector_${{steps.latest_tag.outputs.release}}.rpm \
+                   MeshInspector_${{steps.latest_tag.outputs.release}}_x64.pkg \
+                   MeshInspector_${{steps.latest_tag.outputs.release}}_arm.pkg
