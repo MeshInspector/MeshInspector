@@ -31,7 +31,7 @@ Our macos package is not signed yet, so to install it, follow this simple steps:
             </td>
         </tr>
         <tr>
-            <td align="center">Fedora 35 x64</td>
+            <td align="center">Fedora 37 x64</td>
             <td align="center">
                 <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.release_tag}}.rpm">rpm</a>
             </td>
