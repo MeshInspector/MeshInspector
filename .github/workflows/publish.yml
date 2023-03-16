@@ -39,6 +39,13 @@ jobs:
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{inputs.tag}} | jq -r '. | .body' > changelog.txt
           python3 update_release_body.py ${{env.RELEASE_PATH}} ${{inputs.tag}}
 
+      - name: Push empty commit
+        id: get-version
+        run: |
+          short_version=${{inputs.tag}}
+          short_version=${short_version%.*}
+          echo "short_version=${short_version}" >> $GITHUB_OUTPUT
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -46,7 +53,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
         with:
           tag_name: ${{inputs.tag}}
-          release_name: Release ${{inputs.tag}}
+          release_name: Release ${{steps.get-version.outputs.short_version}}
           draft: false
           prerelease: false
           body_path: .github/final_body.txt
@@ -59,13 +66,6 @@ jobs:
           fileName: "*"
           out-file-path: "downloads"
           token: ${{ secrets.RELEASE_MACHINE_TOKEN }}
-
-      - name: Push empty commit
-        id: get-version
-        run: |
-          short_version=${{inputs.tag}}
-          short_version=${short_version%.*}
-          echo "short_version=${short_version}" >> $GITHUB_OUTPUT
 
       - name: Upload Installers
         working-directory: downloads
