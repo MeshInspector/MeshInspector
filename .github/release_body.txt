@@ -15,37 +15,37 @@ Our macos package is not signed yet, so to install it, follow this simple steps:
         <tr>
             <td align="center">Windows x64</td>
             <td align="center">
-                <a href="${{env.RELEASE_PATH}}/MeshInspectorInstaller_${{inputs.release_tag}}.msi">msi</a>
+                <a href="${{env.RELEASE_PATH}}/MeshInspectorInstaller_${{inputs.short_version}}.msi">msi</a>
             </td>
         </tr>
         <tr>
             <td align="center">Ubuntu 20 LTS x64</td>
             <td align="center">
-                <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.release_tag}}_ubuntu20.deb">deb</a>
+                <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.short_version}}_ubuntu20.deb">deb</a>
             </td>
         </tr>
         <tr>
             <td align="center">Ubuntu 22 LTS x64</td>
             <td align="center">
-                <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.release_tag}}_ubuntu22.deb">deb</a>
+                <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.short_version}}_ubuntu22.deb">deb</a>
             </td>
         </tr>
         <tr>
             <td align="center">Fedora 37 x64</td>
             <td align="center">
-                <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.release_tag}}.rpm">rpm</a>
+                <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.short_version}}.rpm">rpm</a>
             </td>
         </tr>
         <tr>
             <td align="center">MacOS x64</td>
             <td align="center">
-                <a href="${{env.RELEASE_PATH}}/MeshInspector_${{inputs.release_tag}}_x64.pkg">x64 pkg</a>
+                <a href="${{env.RELEASE_PATH}}/MeshInspector_${{inputs.short_version}}_x64.pkg">x64 pkg</a>
             </td>
         </tr>
         <tr>
             <td align="center">MacOS arm</td>
             <td align="center">
-                <a href="${{env.RELEASE_PATH}}/MeshInspector_${{inputs.release_tag}}_arm.pkg">arm pkg</a>
+                <a href="${{env.RELEASE_PATH}}/MeshInspector_${{inputs.short_version}}_arm.pkg">arm pkg</a>
             </td>
         </tr>
     </tbody>
