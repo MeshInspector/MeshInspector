@@ -63,7 +63,8 @@ jobs:
       - name: Push empty commit
         id: get-version
         run: |
-          short_version=${{inputs.tag%.*}}
+          short_version=${{inputs.tag}}
+          short_version=${short_version%.*}
           echo "short_version=${short_version}" >> $GITHUB_OUTPUT
 
       - name: Upload Installers
