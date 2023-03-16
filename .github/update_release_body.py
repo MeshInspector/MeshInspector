@@ -6,7 +6,7 @@ if len(sys.argv) != 3:
 
 RELEASE_PATH = sys.argv[1]
 RELEASE_TAG = sys.argv[2]
-SHORT_VERSION = RELEASE_TAG.rsplit('.', 1).get(0)
+SHORT_VERSION = RELEASE_TAG.rsplit('.', 1)[0]
 
 with open("changelog.txt", "r") as changelog, open("release_body.txt", "r") as release_body, open("final_body.txt", "w") as output:
     for line in release_body:
