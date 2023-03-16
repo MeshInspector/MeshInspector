@@ -6,11 +6,13 @@ if len(sys.argv) != 3:
 
 RELEASE_PATH = sys.argv[1]
 RELEASE_TAG = sys.argv[2]
+SHORT_VERSION = RELEASE_TAG.str.rsplit('.', n=1).str.get(0)
 
 with open("changelog.txt", "r") as changelog, open("release_body.txt", "r") as release_body, open("final_body.txt", "w") as output:
     for line in release_body:
         line = line.replace("${{env.RELEASE_PATH}}", RELEASE_PATH)
         line = line.replace("${{inputs.release_tag}}", RELEASE_TAG)
+        line = line.replace("${{inputs.short_version}}", SHORT_VERSION)
         output.write(line)
 
     output.write("\n")
