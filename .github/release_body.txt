@@ -25,9 +25,21 @@ Our macos package is not signed yet, so to install it, follow this simple steps:
             </td>
         </tr>
         <tr>
+            <td align="center">Ubuntu 20 LTS arm64</td>
+            <td align="center">
+                <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.short_version}}_ubuntu20-arm64.deb">deb</a>
+            </td>
+        </tr>
+        <tr>
             <td align="center">Ubuntu 22 LTS x64</td>
             <td align="center">
                 <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.short_version}}_ubuntu22.deb">deb</a>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">Ubuntu 22 LTS arm64</td>
+            <td align="center">
+                <a href="${{env.RELEASE_PATH}}/meshinspector_${{inputs.short_version}}_ubuntu22-arm64.deb">deb</a>
             </td>
         </tr>
         <tr>
