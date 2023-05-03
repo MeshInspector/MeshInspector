@@ -71,11 +71,11 @@ jobs:
         working-directory: downloads
         run: |
             gh release upload ${{inputs.tag}} \
-                   MeshInspectorInstaller_${{steps.get-version.outputs.short_version}}.msi \
+                   MeshInspectorInstaller_${{inputs.tag}}.msi \
                    meshinspector_${{steps.get-version.outputs.short_version}}_ubuntu20.deb \
                    meshinspector_${{steps.get-version.outputs.short_version}}_ubuntu20-arm64.deb \
                    meshinspector_${{steps.get-version.outputs.short_version}}_ubuntu22.deb \
                    meshinspector_${{steps.get-version.outputs.short_version}}_ubuntu22-arm64.deb \
                    meshinspector_${{steps.get-version.outputs.short_version}}.rpm \
-                   MeshInspector_${{steps.get-version.outputs.short_version}}_x64.pkg \
-                   MeshInspector_${{steps.get-version.outputs.short_version}}_arm.pkg
+                   MeshInspector_${{inputs.tag}}_x64.pkg \
+                   MeshInspector_${{inputs.tag}}_arm.pkg
