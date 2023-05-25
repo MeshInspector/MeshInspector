@@ -39,13 +39,6 @@ jobs:
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{inputs.tag}} | jq -r '. | .body' > changelog.txt
           python3 update_release_body.py ${{env.RELEASE_PATH}} ${{inputs.tag}}
 
-      - name: Push empty commit
-        id: get-version
-        run: |
-          short_version=${{inputs.tag}}
-          short_version=${short_version%.*}
-          echo "short_version=${short_version}" >> $GITHUB_OUTPUT
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -53,7 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
         with:
           tag_name: ${{inputs.tag}}
-          release_name: Release ${{steps.get-version.outputs.short_version}}
+          release_name: Release ${{inputs.tag}}
           draft: false
           prerelease: false
           body_path: .github/final_body.txt
@@ -71,11 +64,11 @@ jobs:
         working-directory: downloads
         run: |
             gh release upload ${{inputs.tag}} \
-                   MeshInspectorInstaller_${{steps.get-version.outputs.short_version}}.msi \
-                   meshinspector_${{steps.get-version.outputs.short_version}}_ubuntu20.deb \
-                   meshinspector_${{steps.get-version.outputs.short_version}}_ubuntu20-arm64.deb \
-                   meshinspector_${{steps.get-version.outputs.short_version}}_ubuntu22.deb \
-                   meshinspector_${{steps.get-version.outputs.short_version}}_ubuntu22-arm64.deb \
-                   meshinspector_${{steps.get-version.outputs.short_version}}.rpm \
-                   MeshInspector_${{steps.get-version.outputs.short_version}}_x64.pkg \
-                   MeshInspector_${{steps.get-version.outputs.short_version}}_arm.pkg
+                   MeshInspectorInstaller_${{inputs.tag}}.msi \
+                   meshinspector_${{inputs.tag}}_ubuntu20.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu20-arm64.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu22.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu22-arm64.deb \
+                   meshinspector_${{inputs.tag}}.rpm \
+                   MeshInspector_${{inputs.tag}}_x64.pkg \
+                   MeshInspector_${{inputs.tag}}_arm.pkg
