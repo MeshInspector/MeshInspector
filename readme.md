@@ -5,12 +5,11 @@
 MeshInspector is an application for geometry processing based on [MeshLib](https://github.com/MeshInspector/MeshLib). 
 Find more on our [website](https://meshinspector.com).
 
-![image](https://user-images.githubusercontent.com/3136125/153055383-a86e9e4f-f260-476c-af5e-c5e28e7a1632.png)
-
 [Check out web version of MeshInspector](https://meshinspector.com/)
-> This is still in work, tested on Chrome and Firefox browsers
 
 [Submit an issue](https://MeshInspector.github.io/ReportIssue/)
+
+![image](https://user-images.githubusercontent.com/3136125/153055383-a86e9e4f-f260-476c-af5e-c5e28e7a1632.png)
 
 ### Technology
  - OpenGL v4 by default, v3 for a compatibility
