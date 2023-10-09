@@ -1,11 +1,9 @@
 # MeshInspector releases
 
-[Download MeshInspector (Windows/Linux/Mac)](https://meshinspector.com/download/)
-
 MeshInspector is an application for geometry processing based on [MeshLib](https://github.com/MeshInspector/MeshLib). 
-Find more on our [website](https://meshinspector.com).
+Find more on our [website](https://meshinspector.com). [Download](https://meshinspector.com/download/) MeshInspector (Windows/Linux/Mac).
 
-[Check out web version of MeshInspector](https://meshinspector.com/)
+[MeshInspector online web-browser version](https://app.meshinspector.com/) (simple email sign-in is required)
 
 [Submit an issue](https://MeshInspector.github.io/ReportIssue/)
 
