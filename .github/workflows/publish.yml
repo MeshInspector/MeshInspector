@@ -68,6 +68,7 @@ jobs:
                    meshinspector_${{inputs.tag}}_ubuntu20.deb \
                    meshinspector_${{inputs.tag}}_ubuntu20-arm64.deb \
                    meshinspector_${{inputs.tag}}_ubuntu22.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu24.deb \
                    meshinspector_${{inputs.tag}}_ubuntu22-arm64.deb \
                    meshinspector_${{inputs.tag}}.rpm \
                    MeshInspector_${{inputs.tag}}_x64.pkg \
