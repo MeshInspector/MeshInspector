@@ -67,8 +67,6 @@ jobs:
                    MeshInspectorInstaller_${{inputs.tag}}.msi \
                    MeshInspector_${{inputs.tag}}-x86_64.AppImage \
                    MeshInspector_${{inputs.tag}}-aarch64.AppImage \
-                   meshinspector_${{inputs.tag}}_ubuntu20.deb \
-                   meshinspector_${{inputs.tag}}_ubuntu20-arm64.deb \
                    meshinspector_${{inputs.tag}}_ubuntu22.deb \
                    meshinspector_${{inputs.tag}}_ubuntu22-arm64.deb \
                    meshinspector_${{inputs.tag}}_ubuntu24.deb \
