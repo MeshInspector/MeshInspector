@@ -16,16 +16,16 @@ jobs:
     timeout-minutes: 5
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.MESHRUSBOT_TOKEN }}
 
       - name: Push empty commit
         run: |
-          git config --global user.email "${{ secrets.MESHRUSBOT_EMAIL }}@gmail.com"
-          git config --global user.name "MeshRusBot"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
           git commit --allow-empty -m "Empty release commit"
           git tag ${{ inputs.tag }}
           git push
@@ -34,8 +34,8 @@ jobs:
         working-directory: .github
         env:
           RELEASE_PATH: https://github.com/${{github.repository}}/releases/download/${{inputs.tag}}
+          GH_TOKEN: ${{ secrets.RELEASE_MACHINE_TOKEN }}
         run: |
-          echo ${{ secrets.RELEASE_MACHINE_TOKEN }} | gh auth login --with-token
           gh api /repos/MeshInspector/MeshInspectorCode/releases/tags/${{inputs.tag}} | jq -r '. | .body' > changelog.txt
           python3 update_release_body.py ${{env.RELEASE_PATH}} ${{inputs.tag}}
 
@@ -43,7 +43,7 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.MESHRUSBOT_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{inputs.tag}}
           release_name: Release ${{inputs.tag}}
@@ -62,6 +62,8 @@ jobs:
 
       - name: Upload Installers
         working-directory: downloads
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             gh release upload ${{inputs.tag}} \
                    MeshInspectorInstaller_${{inputs.tag}}.msi \
