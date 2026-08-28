@@ -41,7 +41,7 @@ Batch repetitive work with in-app Python, or let an AI agent drive MeshInspector
 | Platform | How to get it |
 |---|---|
 | **Web** | [app.meshinspector.com](https://app.meshinspector.com/sign-up) — the full application in a browser tab, nothing to install. |
-| **Desktop** | Windows (`.msi`), macOS (`.pkg`, Intel and Apple silicon) and Linux (Ubuntu 20.04+ `.deb`, or the distro-independent `.AppImage`; x64 and arm64) — [meshinspector.com/download](https://meshinspector.com/download/) or [Releases](https://github.com/MeshInspector/MeshInspector/releases/latest). |
+| **Desktop** | Windows (`.msi`), macOS (`.pkg`, Intel and Apple silicon) and Linux (Ubuntu 22+ `.deb`, or the distro-independent `.AppImage`; x64 and arm64) — [meshinspector.com/download](https://meshinspector.com/download/) or [Releases](https://github.com/MeshInspector/MeshInspector/releases/latest). |
 | **Scripted** | Embedded Python for batch jobs, plus MCP for agent-driven workflows. |
 
 ## Built on MeshLib
