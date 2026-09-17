@@ -66,12 +66,17 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             gh release upload ${{inputs.tag}} \
+                   MeshInspectorSetup_${{inputs.tag}}.exe \
                    MeshInspectorInstaller_${{inputs.tag}}.msi \
+                   MeshInspectorSetup_${{inputs.tag}}_arm64.exe \
+                   MeshInspectorInstaller_${{inputs.tag}}_arm64.msi \
                    MeshInspector_${{inputs.tag}}-x86_64.AppImage \
                    MeshInspector_${{inputs.tag}}-aarch64.AppImage \
                    meshinspector_${{inputs.tag}}_ubuntu22.deb \
                    meshinspector_${{inputs.tag}}_ubuntu22-arm64.deb \
                    meshinspector_${{inputs.tag}}_ubuntu24.deb \
                    meshinspector_${{inputs.tag}}_ubuntu24-arm64.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu26.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu26-arm64.deb \
                    MeshInspector_${{inputs.tag}}_x64.pkg \
                    MeshInspector_${{inputs.tag}}_arm.pkg
