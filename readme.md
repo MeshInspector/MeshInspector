@@ -9,7 +9,7 @@
 
 **Get MeshInspector from [meshinspector.com/download](https://meshinspector.com/download/)** — installers for Windows, macOS and Linux. Every build is also published here on [Releases](https://github.com/MeshInspector/MeshInspector/releases/latest): `.msi`, `.pkg`, `.deb` and `.AppImage` (x86_64 and aarch64). Or skip installing entirely and [open the web app](https://app.meshinspector.com/sign-up).
 
-![MeshInspector — STL editor and mesh repair application](https://user-images.githubusercontent.com/3136125/153055383-a86e9e4f-f260-476c-af5e-c5e28e7a1632.png)
+![MeshInspector — STL editor and mesh repair application]([https://user-images.githubusercontent.com/3136125/153055383-a86e9e4f-f260-476c-af5e-c5e28e7a1632.png](https://camo.githubusercontent.com/6b8012366217250bbb32954fba64fd5312e2b148a7cb6e5411a95ae4a3475713/68747470733a2f2f6d657368696e73706563746f722e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032342f30332f33442d6d6573682d70726f63657373696e672d6c6962726172792e706e67))
 
 ## What you can do with it
 
