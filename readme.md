@@ -7,7 +7,7 @@
 
 [**Get started for free →**](https://app.meshinspector.com/sign-up) · [**Download for Windows / macOS / Linux**](https://meshinspector.com/download/) · [Releases](https://github.com/MeshInspector/MeshInspector/releases) · [Website](https://meshinspector.com/) · [Features](https://meshinspector.com/features/) · [Knowledge base](https://meshinspector.com/knowledge-base/) · [Report an issue](https://MeshInspector.github.io/ReportIssue/)
 
-**Get MeshInspector from [meshinspector.com/download](https://meshinspector.com/download/)** — installers for Windows, macOS and Linux. Every build is also published here on [Releases](https://github.com/MeshInspector/MeshInspector/releases/latest): `.msi`, `.pkg`, `.deb` and `.AppImage` (x86_64 and aarch64). Or skip installing entirely and [open the web app](https://app.meshinspector.com/sign-up).
+**Get MeshInspector from [meshinspector.com/download](https://meshinspector.com/download/)** — installers for Windows, macOS and Linux. Every build is also published here on [Releases](https://github.com/MeshInspector/MeshInspector/releases/latest): `.msi`, `.dmg`, `.deb` and `.AppImage` (x86_64 and aarch64). Or skip installing entirely and [open the web app](https://app.meshinspector.com/sign-up).
 
 ![MeshInspector — STL editor and mesh repair application](https://user-images.githubusercontent.com/3136125/153055383-a86e9e4f-f260-476c-af5e-c5e28e7a1632.png)
 
@@ -41,7 +41,7 @@ Batch repetitive work with in-app Python, or let an AI agent drive MeshInspector
 | Platform | How to get it |
 |---|---|
 | **Web** | [app.meshinspector.com](https://app.meshinspector.com/sign-up) — the full application in a browser tab, nothing to install. |
-| **Desktop** | Windows (`.msi`), macOS (`.pkg`, Intel and Apple silicon) and Linux (Ubuntu 22+ `.deb`, or the distro-independent `.AppImage`; x64 and arm64) — [meshinspector.com/download](https://meshinspector.com/download/) or [Releases](https://github.com/MeshInspector/MeshInspector/releases/latest). |
+| **Desktop** | Windows (`.msi`), macOS (`.dmg`, Intel and Apple silicon) and Linux (Ubuntu 22+ `.deb`, or the distro-independent `.AppImage`; x64 and arm64) — [meshinspector.com/download](https://meshinspector.com/download/) or [Releases](https://github.com/MeshInspector/MeshInspector/releases/latest). |
 | **Scripted** | Embedded Python for batch jobs, plus MCP for agent-driven workflows. |
 
 ## Built on MeshLib
