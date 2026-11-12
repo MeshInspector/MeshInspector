@@ -72,11 +72,11 @@ jobs:
                    MeshInspectorInstaller_${{inputs.tag}}_arm64.msi \
                    MeshInspector_${{inputs.tag}}-x86_64.AppImage \
                    MeshInspector_${{inputs.tag}}-aarch64.AppImage \
-                   meshinspector_${{inputs.tag}}_ubuntu22.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu22-x64.deb \
                    meshinspector_${{inputs.tag}}_ubuntu22-arm64.deb \
-                   meshinspector_${{inputs.tag}}_ubuntu24.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu24-x64.deb \
                    meshinspector_${{inputs.tag}}_ubuntu24-arm64.deb \
-                   meshinspector_${{inputs.tag}}_ubuntu26.deb \
+                   meshinspector_${{inputs.tag}}_ubuntu26-x64.deb \
                    meshinspector_${{inputs.tag}}_ubuntu26-arm64.deb \
-                   MeshInspector_${{inputs.tag}}_x64.pkg \
-                   MeshInspector_${{inputs.tag}}_arm.pkg
+                   MeshInspector_${{inputs.tag}}_x64.dmg \
+                   MeshInspector_${{inputs.tag}}_arm.dmg
